@@ -7,7 +7,8 @@ component {
         convert_to_cents: false,
         default_currency: '',
         endpoint: 'api.stripe.com/v1',
-        stripe_version: ''
+        stripe_version: '',
+        user_agent: 'MLSP'
     };
 
     public any function init( string apiKey = '', struct config = { } ) {

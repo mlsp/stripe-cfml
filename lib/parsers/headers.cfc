@@ -5,7 +5,8 @@ component {
         'api_version': 'Stripe-Version',
         'stripe_version': 'Stripe-Version',
         'idempotency_key': 'Idempotency-Key',
-        'stripe_account': 'Stripe-Account'
+        'stripe_account': 'Stripe-Account',
+        'user_agent': 'User-Agent',
     };
 
     public any function init( required any config ) {
