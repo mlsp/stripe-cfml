@@ -1,8 +1,11 @@
-component extends="abstract.apiResource" {
+component {
 
-    variables.metadata = {
+    this.metadata = {
         methods: {
             'create': {
+                arguments: {
+                    amount: 'currency'
+                },
                 httpMethod: 'post',
                 path: '/refunds'
             },

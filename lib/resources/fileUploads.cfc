@@ -1,9 +1,9 @@
-component extends="abstract.apiResource" {
+component {
 
-    variables.metadata = {
+    this.metadata = {
         methods: {
             'create': {
-                endpoint: 'uploads.stripe.com/v1',
+                endpoint: 'files.stripe.com/v1',
                 httpMethod: 'post',
                 multipart: true,
                 path: '/files'
@@ -12,11 +12,11 @@ component extends="abstract.apiResource" {
                 arguments: {
                     created: 'datefilter'
                 },
-                endpoint: 'uploads.stripe.com/v1',
+                endpoint: 'files.stripe.com/v1',
                 path: '/files'
             },
             'retrieve': {
-                endpoint: 'uploads.stripe.com/v1',
+                endpoint: 'files.stripe.com/v1',
                 path: '/files/{file_upload_id}'
             }
         }

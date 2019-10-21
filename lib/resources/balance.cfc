@@ -1,19 +1,9 @@
-component extends="abstract.apiResource" {
+component {
 
-    variables.metadata = {
+    this.metadata = {
         methods: {
-            'listTransactions': {
-                arguments: {
-                    available_on: 'datefilter',
-                    created: 'datefilter'
-                },
-                path: '/balance/history'
-            },
             'retrieve': {
                 path: '/balance'
-            },
-            'retrieveTransaction': {
-                path: '/balance/history/{balance_transaction_id}'
             }
         }
     };

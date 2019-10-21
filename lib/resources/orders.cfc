@@ -1,9 +1,10 @@
-component extends="abstract.apiResource" {
+component {
 
-    variables.metadata = {
+    this.metadata = {
         methods: {
             'create': {
                 arguments: {
+                    currency: 'iso_currency_code',
                     items: {
                         amount: 'currency'
                     }

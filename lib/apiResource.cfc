@@ -2,11 +2,20 @@ component {
 
     variables.metadata = { };
 
-    function init( required any stripe, required any config ) {
+    function init( required any stripe, required any config, required string resourceName ) {
         variables.stripe = arguments.stripe;
         variables.config = arguments.config;
-        variables.resourceName = getMetadata( this ).name.listLast( '.' );
-        variables.metadata = loadMetadata( variables.metadata );
+        variables.resourceName = resourceName;
+        var resource = new 'resources.#resourceName#'();
+        variables.metadata = loadMetadata( resource.metadata );
+        var resourceMetadata = getMetadata( resource );
+        if ( resourceMetadata.keyExists( 'functions' ) ) {
+            for ( var func in getMetadata( resource ).functions ) {
+                if ( func.access == 'public' ) {
+                    this[ func.name ] = resource[ func.name ];
+                }
+            }
+        }
         return this;
     }
 
@@ -15,7 +24,12 @@ component {
             var message = '`stripe.#resourceName#.#missingMethodName#()` is not a valid method for `stripe.#resourceName#`. Available methods are #metadata.methodNameList#.';
             throw( message );
         }
-        return stripe.call( resourceName, missingMethodName, missingMethodArguments, metadata.methods[ missingMethodName ] );
+        return stripe.call(
+            resourceName,
+            missingMethodName,
+            missingMethodArguments,
+            metadata.methods[ missingMethodName ]
+        );
     }
 
     private struct function loadMetadata( metadata ) {
@@ -29,7 +43,9 @@ component {
             }
         }
 
-        loaded.methodNameList = arrayMap( loaded.methods.keyArray(), function( mn ) {
+        var methodNameArray = loaded.methods.keyArray();
+        arraySort( methodNameArray, 'text' );
+        loaded.methodNameList = arrayMap( methodNameArray, function( mn ) {
             return 'stripe.#resourceName#.#mn#()';
         } );
         var length = arrayLen( loaded.methodNameList );
@@ -40,16 +56,18 @@ component {
     }
 
     private struct function getBaseMethodMetadata() {
-        return { endpoint: config.get( 'endpoint' ), httpMethod: 'get', multipart: false, arguments: { } };
+        return {
+            endpoint: config.get( 'endpoint' ),
+            httpMethod: 'get',
+            multipart: false,
+            arguments: { }
+        };
     }
 
     private array function parsePath( required string path ) {
-        return arrayMap(
-            reMatch( '\{([a-z_]+)\}', path),
-            function( s ) {
-                return mid( s, 2, len( s ) - 2 );
-            }
-        );
+        return arrayMap( reMatch( '\{([a-z_]+)\}', path ), function( s ) {
+            return mid( s, 2, len( s ) - 2 );
+        } );
     }
 
 }

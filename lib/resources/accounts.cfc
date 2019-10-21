@@ -1,6 +1,6 @@
-component extends="abstract.apiResource" {
+component {
 
-    variables.metadata = {
+    this.metadata = {
         methods: {
             'create': {
                 arguments: {
@@ -19,6 +19,10 @@ component extends="abstract.apiResource" {
                 httpMethod: 'post',
                 path: '/accounts/{account_id}/login_links'
             },
+            'createPerson': {
+                httpMethod: 'post',
+                path: '/accounts/{account_id}/persons'
+            },
             'delete': {
                 httpMethod: 'delete',
                 path: '/accounts/{account_id}'
@@ -27,11 +31,21 @@ component extends="abstract.apiResource" {
                 httpMethod: 'delete',
                 path: '/accounts/{account_id}/external_accounts/{source_id}'
             },
+            'deletePerson': {
+                httpMethod: 'delete',
+                path: '/accounts/{account_id}/persons/{person_id}'
+            },
             'list': {
                 path: '/accounts'
             },
+            'listCapabilities': {
+                path: '/accounts/{account_id}/capabilities'
+            },
             'listExternalAccounts': {
                 path: '/accounts/{account_id}/external_accounts'
+            },
+            'listPersons': {
+                path: '/accounts/{account_id}/persons'
             },
             'reject': {
                 httpMethod: 'post',
@@ -40,8 +54,14 @@ component extends="abstract.apiResource" {
             'retrieve': {
                 path: '/accounts/{account_id}'
             },
+            'retrieveCapability': {
+                path: '/accounts/{account_id}/capabilities/{capability_id}'
+            },
             'retrieveExternalAccount': {
                 path: '/accounts/{account_id}/external_accounts/{source_id}'
+            },
+            'retrievePerson': {
+                path: '/accounts/{account_id}/persons/{person_id}'
             },
             'update': {
                 arguments: {
@@ -52,9 +72,17 @@ component extends="abstract.apiResource" {
                 httpMethod: 'post',
                 path: '/accounts/{account_id}'
             },
+            'updateCapability': {
+                httpMethod: 'post',
+                path: '/accounts/{account_id}/capabilities/{capability_id}'
+            },
             'updateExternalAccount': {
                 httpMethod: 'post',
                 path: '/accounts/{account_id}/external_accounts/{source_id}'
+            },
+            'updatePerson': {
+                httpMethod: 'post',
+                path: '/accounts/{account_id}/persons/{person_id}'
             }
         }
     };
@@ -72,9 +100,19 @@ component extends="abstract.apiResource" {
             methodMetadata.path = '/account';
             methodMetadata.pathArgs = [ ];
             methodMetadata.positionalArgs = [ ];
-            return stripe.call( 'accounts', 'retrieve', arguments, methodMetadata );
+            return stripe.call(
+                'accounts',
+                'retrieve',
+                arguments,
+                methodMetadata
+            );
         }
-        return stripe.call( 'accounts', 'retrieve', arguments, metadata.methods.retrieve );
+        return stripe.call(
+            'accounts',
+            'retrieve',
+            arguments,
+            metadata.methods.retrieve
+        );
     }
 
 }

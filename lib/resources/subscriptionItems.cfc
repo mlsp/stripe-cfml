@@ -1,6 +1,6 @@
-component extends="abstract.apiResource" {
+component {
 
-    variables.metadata = {
+    this.metadata = {
         methods: {
             'create': {
                 arguments: {
@@ -9,7 +9,17 @@ component extends="abstract.apiResource" {
                 httpMethod: 'post',
                 path: '/subscription_items'
             },
+            'createUsageRecord': {
+                arguments: {
+                    timestamp: 'timestamp'
+                },
+                httpMethod: 'post',
+                path: '/subscription_items/{subscription_item_id}/usage_records'
+            },
             'delete': {
+                arguments: {
+                    proration_date: 'timestamp'
+                },
                 httpMethod: 'delete',
                 path: '/subscription_items/{subscription_item_id}'
             },

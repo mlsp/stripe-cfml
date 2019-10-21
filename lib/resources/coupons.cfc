@@ -1,10 +1,18 @@
-component extends="abstract.apiResource" {
+component {
 
-    variables.metadata = {
+    this.metadata = {
         methods: {
             'create': {
+                arguments: {
+                    amount_off: 'currency',
+                    redeem_by: 'timestamp'
+                },
                 httpMethod: 'post',
                 path: '/coupons'
+            },
+            'delete': {
+                httpMethod: 'delete',
+                path: '/coupons/{coupon_id}'
             },
             'list': {
                 arguments: {

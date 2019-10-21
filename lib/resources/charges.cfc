@@ -1,11 +1,12 @@
-component extends="abstract.apiResource" {
+component {
 
-    variables.metadata = {
+    this.metadata = {
         methods: {
             'capture': {
                 arguments: {
                     amount: 'currency',
                     application_fee: 'currency',
+                    application_fee_amount: 'currency',
                     destination: {
                         amount: 'currency'
                     }
@@ -17,6 +18,7 @@ component extends="abstract.apiResource" {
                 arguments: {
                     amount: 'currency',
                     application_fee: 'currency',
+                    application_fee_amount: 'currency',
                     currency: 'iso_currency_code',
                     destination: {
                         amount: 'currency'
@@ -40,15 +42,5 @@ component extends="abstract.apiResource" {
             }
         }
     };
-
-    public struct function markAsSafe() {
-        var argOverrides = { fraud_details: { user_report: 'safe' } };
-        return stripe.call( 'charges', 'markAsSafe', arguments, metadata.methods.update, argOverrides );
-    }
-
-    public struct function markAsFraudulent() {
-        var argOverrides = { fraud_details: { user_report: 'fraudulent' } };
-        return stripe.call( 'charges', 'markAsFraudulent', arguments, metadata.methods.update, argOverrides );
-    }
 
 }

@@ -1,9 +1,10 @@
-component extends="abstract.apiResource" {
+component {
 
-    variables.metadata = {
+    this.metadata = {
         methods: {
             'create': {
                 arguments: {
+                    currency: 'iso_currency_code',
                     price: 'currency'
                 },
                 httpMethod: 'post',
@@ -21,6 +22,7 @@ component extends="abstract.apiResource" {
             },
             'update': {
                 arguments: {
+                    currency: 'iso_currency_code',
                     price: 'currency'
                 },
                 httpMethod: 'post',
