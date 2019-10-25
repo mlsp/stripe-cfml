@@ -7,7 +7,8 @@ component {
         convert_to_cents: false,
         default_currency: '',
         endpoint: 'api.stripe.com/v1',
-        stripe_version: ''
+        stripe_version: '',
+        user_agent = 'StripeCFML'
     };
 
     public any function init( string apiKey = '', struct config = { } ) {
@@ -16,6 +17,11 @@ component {
         if ( len( apiKey ) ) {
             settings.api_key = apiKey;
         }
+        
+        if ( structKeyExists(config, 'user_agent' )) {
+            settings.user_agent = config.user_agent;
+        }
+        
         return this;
     }
 
