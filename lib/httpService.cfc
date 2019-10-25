@@ -40,9 +40,6 @@ component {
 
         httpRequest.headers = parseHeaders( headers );
 
-        // writeDump( arguments );
-        // writeDump( httpRequest );
-
         return exec( httpRequest );
     }
 
